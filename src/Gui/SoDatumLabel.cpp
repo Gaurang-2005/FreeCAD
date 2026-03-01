@@ -1285,21 +1285,41 @@ void SoDatumLabel::drawDistance(const SbVec3f* points, float& angle, SbVec3f& te
     glColor3f(t[0], t[1], t[2]);
 
     // Perp Lines
-    glBegin(GL_LINES);
-    if (this->param1.getValue() != 0.) {
-        glVertex2f(geom.p1[0], geom.p1[1]);
-        glVertex2f(geom.perp1[0], geom.perp1[1]);
+    // glBegin(GL_LINES);
+    // if (this->param1.getValue() != 0.) {
+    //     glVertex2f(geom.p1[0], geom.p1[1]);
+    //     glVertex2f(geom.perp1[0], geom.perp1[1]);
 
-        glVertex2f(geom.p2[0], geom.p2[1]);
-        glVertex2f(geom.perp2[0], geom.perp2[1]);
+    //     glVertex2f(geom.p2[0], geom.p2[1]);
+    //     glVertex2f(geom.perp2[0], geom.perp2[1]);
+    // }
+
+    // glVertex2f(geom.par1[0], geom.par1[1]);
+    // glVertex2f(geom.par2[0], geom.par2[1]);
+
+    // glVertex2f(geom.par3[0], geom.par3[1]);
+    // glVertex2f(geom.par4[0], geom.par4[1]);
+    // glEnd();
+    glBegin(GL_LINES);
+
+    float z = ZARROW_TEXT_OFFSET;   // render above model
+
+    if (this->param1.getValue() != 0.) {
+        glVertex3f(geom.p1[0], geom.p1[1], z);
+        glVertex3f(geom.perp1[0], geom.perp1[1], z);
+
+        glVertex3f(geom.p2[0], geom.p2[1], z);
+        glVertex3f(geom.perp2[0], geom.perp2[1], z);
     }
 
-    glVertex2f(geom.par1[0], geom.par1[1]);
-    glVertex2f(geom.par2[0], geom.par2[1]);
+    glVertex3f(geom.par1[0], geom.par1[1], z);
+    glVertex3f(geom.par2[0], geom.par2[1], z);
 
-    glVertex2f(geom.par3[0], geom.par3[1]);
-    glVertex2f(geom.par4[0], geom.par4[1]);
+    glVertex3f(geom.par3[0], geom.par3[1], z);
+    glVertex3f(geom.par4[0], geom.par4[1], z);
+
     glEnd();
+
 
     // Draw the arrowheads at elevated Z to render ON TOP of geometry lines
     glBegin(GL_TRIANGLES);
@@ -1346,12 +1366,20 @@ void SoDatumLabel::drawRadiusOrDiameter(const SbVec3f* points, float& angle, SbV
     textOffset = geom.textOffset;
 
     // Draw the Lines
-    glBegin(GL_LINES);
-    glVertex2f(geom.p1[0], geom.p1[1]);
-    glVertex2f(geom.pnt1[0], geom.pnt1[1]);
+    // glBegin(GL_LINES);
+    // glVertex2f(geom.p1[0], geom.p1[1]);
+    // glVertex2f(geom.pnt1[0], geom.pnt1[1]);
 
-    glVertex2f(geom.pnt2[0], geom.pnt2[1]);
-    glVertex2f(geom.p2[0], geom.p2[1]);
+    // glVertex2f(geom.pnt2[0], geom.pnt2[1]);
+    // glVertex2f(geom.p2[0], geom.p2[1]);
+    // glEnd();
+    // Draw the Lines at elevated Z so they appear above model
+    glBegin(GL_LINES);
+    glVertex3f(geom.p1[0], geom.p1[1], ZARROW_TEXT_OFFSET);
+    glVertex3f(geom.pnt1[0], geom.pnt1[1], ZARROW_TEXT_OFFSET);
+
+    glVertex3f(geom.pnt2[0], geom.pnt2[1], ZARROW_TEXT_OFFSET);
+    glVertex3f(geom.p2[0], geom.p2[1], ZARROW_TEXT_OFFSET);
     glEnd();
 
     // Draw arrowhead at elevated Z to render ON TOP of geometry lines
@@ -1393,8 +1421,16 @@ void SoDatumLabel::drawAngle(const SbVec3f* points, float& angle, SbVec3f& textO
     glDrawArc(geom.p0, geom.r, geom.startangle + geom.range / 2.0 + geom.textMargin, geom.endangle);
 
     // draw extension lines
-    glDrawLine(geom.pnt1, geom.pnt2);
-    glDrawLine(geom.pnt3, geom.pnt4);
+    // glDrawLine(geom.pnt1, geom.pnt2);
+    // glDrawLine(geom.pnt3, geom.pnt4);
+    // draw extension lines at elevated Z so they appear above model
+    glBegin(GL_LINES);
+    glVertex3f(geom.pnt1[0], geom.pnt1[1], ZARROW_TEXT_OFFSET);
+    glVertex3f(geom.pnt2[0], geom.pnt2[1], ZARROW_TEXT_OFFSET);
+
+    glVertex3f(geom.pnt3[0], geom.pnt3[1], ZARROW_TEXT_OFFSET);
+    glVertex3f(geom.pnt4[0], geom.pnt4[1], ZARROW_TEXT_OFFSET);
+    glEnd();
 
     // draw arrowheads
     glDrawArrow(geom.startArrowBase, geom.dirStart, geom.arrowWidth, geom.arrowLength);
@@ -1448,9 +1484,16 @@ void SoDatumLabel::drawArcLength(const SbVec3f* points, float& angle, SbVec3f& t
     glDrawArc(geom.arcCenter, geom.arcRadius, geom.startangle, geom.endangle);
 
     // draw lines
-    glDrawLine(geom.pnt1, geom.pnt2);
-    glDrawLine(geom.pnt3, geom.pnt4);
+    // glDrawLine(geom.pnt1, geom.pnt2);
+    // glDrawLine(geom.pnt3, geom.pnt4);
 
+    glBegin(GL_LINES);
+    glVertex3f(geom.pnt1[0], geom.pnt1[1], ZARROW_TEXT_OFFSET);
+    glVertex3f(geom.pnt2[0], geom.pnt2[1], ZARROW_TEXT_OFFSET);
+
+    glVertex3f(geom.pnt3[0], geom.pnt3[1], ZARROW_TEXT_OFFSET);
+    glVertex3f(geom.pnt4[0], geom.pnt4[1], ZARROW_TEXT_OFFSET);
+    glEnd();
     // create the arrowheads
     float arrowLength = geom.margin * 2;
     float arrowWidth = geom.margin * 0.5F;
