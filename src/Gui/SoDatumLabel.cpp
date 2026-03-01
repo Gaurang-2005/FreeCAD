@@ -1366,13 +1366,6 @@ void SoDatumLabel::drawRadiusOrDiameter(const SbVec3f* points, float& angle, SbV
     textOffset = geom.textOffset;
 
     // Draw the Lines
-    // glBegin(GL_LINES);
-    // glVertex2f(geom.p1[0], geom.p1[1]);
-    // glVertex2f(geom.pnt1[0], geom.pnt1[1]);
-
-    // glVertex2f(geom.pnt2[0], geom.pnt2[1]);
-    // glVertex2f(geom.p2[0], geom.p2[1]);
-    // glEnd();
     // Draw the Lines at elevated Z so they appear above model
     glBegin(GL_LINES);
     glVertex3f(geom.p1[0], geom.p1[1], ZARROW_TEXT_OFFSET);
@@ -1421,8 +1414,6 @@ void SoDatumLabel::drawAngle(const SbVec3f* points, float& angle, SbVec3f& textO
     glDrawArc(geom.p0, geom.r, geom.startangle + geom.range / 2.0 + geom.textMargin, geom.endangle);
 
     // draw extension lines
-    // glDrawLine(geom.pnt1, geom.pnt2);
-    // glDrawLine(geom.pnt3, geom.pnt4);
     // draw extension lines at elevated Z so they appear above model
     glBegin(GL_LINES);
     glVertex3f(geom.pnt1[0], geom.pnt1[1], ZARROW_TEXT_OFFSET);
@@ -1484,9 +1475,6 @@ void SoDatumLabel::drawArcLength(const SbVec3f* points, float& angle, SbVec3f& t
     glDrawArc(geom.arcCenter, geom.arcRadius, geom.startangle, geom.endangle);
 
     // draw lines
-    // glDrawLine(geom.pnt1, geom.pnt2);
-    // glDrawLine(geom.pnt3, geom.pnt4);
-
     glBegin(GL_LINES);
     glVertex3f(geom.pnt1[0], geom.pnt1[1], ZARROW_TEXT_OFFSET);
     glVertex3f(geom.pnt2[0], geom.pnt2[1], ZARROW_TEXT_OFFSET);
